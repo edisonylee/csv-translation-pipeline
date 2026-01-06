@@ -1,0 +1,11 @@
+# File: .dockerignore
+
+target/
+.git/
+_docs/
+*.md
+.env
+tests/
+examples/
+Dockerfile*
+docker-compose*
