@@ -1,0 +1,29 @@
+# File: render.yaml
+
+services:
+  - type: web
+    name: translator-server
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    region: oregon
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: REDIS_URL
+        fromService:
+          name: redis
+          type: redis
+          property: connectionString
+      - key: PORT
+        value: "3000"
+      - key: RUST_LOG
+        value: info,translator_server=debug
+      - key: CACHE_TTL_SECONDS
+        value: "86400"
+
+  - type: redis
+    name: redis
+    plan: free
+    region: oregon
+    maxmemoryPolicy: allkeys-lru

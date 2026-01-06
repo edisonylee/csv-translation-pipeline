@@ -1,0 +1,35 @@
+[package]
+name = "translator"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Async CSV translation pipeline with pluggable providers"
+
+[[bin]]
+name = "translate_csv"
+path = "src/bin/translate_csv.rs"
+
+[dependencies]
+tokio.workspace = true
+serde.workspace = true
+reqwest.workspace = true
+thiserror.workspace = true
+uuid.workspace = true
+
+csv-async = { version = "1", features = ["tokio"] }
+clap = { version = "4", features = ["derive"] }
+fastrand = "2"
+
+# Optional: MarianMT provider
+rust-bert = { version = "0.23", optional = true }
+tch = { version = "0.17", optional = true }
+
+[dev-dependencies]
+tokio-test = "0.4"
+csv = "1"
+
+[features]
+default = []
+marian = ["rust-bert", "tch"]
